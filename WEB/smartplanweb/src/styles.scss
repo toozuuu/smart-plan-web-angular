@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+
+// variables
+@import "assets/scss/variables/fonts";
+@import "assets/scss/variables/colors";
+
+// main styles
+@import "assets/scss/main-style.scss";
+
+// components
+@import "assets/scss/buttons.scss";
+@import "assets/scss/form.scss";
+@import "assets/scss/tabel.scss";
+
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  .main {
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #90A4AE;
+  border-radius: 10px;
+}
+
+a,
+a:active,
+a:hover,
+a:link,
+a:visited {
+  text-decoration: none;
+  outline: 0;
+  -webkit-transition: all 0.35s linear;
+  -moz-transition: all 0.35s linear;
+  -o-transition: all 0.35s linear;
+  transition: all 0.35s linear;
+}
+
+.matsearch {
+  color: black !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+  color: black !important;
+}
+

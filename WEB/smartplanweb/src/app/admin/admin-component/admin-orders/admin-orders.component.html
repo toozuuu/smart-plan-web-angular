@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex flex-row justify-content-between">
+      <div>
+        <h4 class="font-weight-bold black">
+          <i class="fa fa-folder-open" aria-hidden="true"></i>
+          Orders
+        </h4>
+      </div>
+      <div class="d-flex">
+        <button class="button primary-btn ml-2" (click)="downloadExcel()"> Export Table to .XLS &nbsp;<i class="fa fa-file"
+                                                                                                         aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div style="width:100%; max-height: 80vh; overflow-y: auto;">
+      <mat-form-field class="matsearch">
+        <input class="matsearch" (keyup)="applyFilter($event.target.value)" matInput placeholder="Search">
+      </mat-form-field>
+
+      <table [dataSource]="dataSource" class="table salestable" mat-table matSort style="width:100%">
+
+        <ng-container matColumnDef="orderId">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Order Id
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            {{row.orderId}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Username
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            {{row.username}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="orderDate">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Order Date
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            {{row.orderDate}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Meal Name
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            <img src="{{'http://localhost:8080/file/download/' + row?.image}}" alt=""
+                 style="height: 70px;border-radius: 10px;"><br>
+            {{row.name}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Meal Type
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            {{row.type}}
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="qty">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Qty
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0%;">
+            {{row.qty}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Price
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0;">
+            $&nbsp;{{row.price| number:'2.2-2'}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Address
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0;">
+            {{row.address}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+            Status
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0;">
+            {{row.status}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef class="center-table centertd tbl td" mat-header-cell mat-sort-header>
+
+          </th>
+          <td *matCellDef="let row" class="center-table tbl" mat-cell style="padding-left: 0;">
+            <button (click)="editUser(row)" style="cursor: pointer" data-target="#editUserStatus"
+                    data-toggle="modal" class="btn btn-primary" type="button">
+              <em class="fa fa-pencil"></em></button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row>
+        </tr>
+      </table>
+
+      <mat-paginator #paginator [pageSizeOptions]="[15]"></mat-paginator>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editUserStatus" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="color:#000;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{selectedOrderDetails?.username}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span>   <img src="{{'http://localhost:8080/file/download/' + selectedOrderDetails?.image}}" alt=""
+                      style="height: 250px;border-radius: 10px;"> </span><br>
+        <span><strong>Order Id</strong> : {{selectedOrderDetails?.orderId}}</span><br><br>
+        <span><strong>Meal Name</strong> : {{selectedOrderDetails?.name}}</span><br><br>
+        <span><strong>Delivery Address</strong> : {{selectedOrderDetails?.address}}</span><br><br>
+        <span><strong>Price</strong> : $&nbsp;{{selectedOrderDetails?.price| number:'2.2-2'}}</span><br><br>
+        <span><strong>Qty</strong> : {{selectedOrderDetails?.qty}}</span><br><br>
+        <span><strong>Order Type</strong> : {{selectedOrderDetails?.orderType}}</span><br><br>
+        <span><strong>Comment</strong> : {{selectedOrderDetails?.comment}}</span><br><br>
+        <span><strong>Order Date</strong> : {{selectedOrderDetails?.orderDate}}</span><br><br>
+        <span><strong>Order Time</strong> : {{selectedOrderDetails?.orderTime}}</span>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-success"
+                data-dismiss="modal"
+                (click)="updateStatus('DELIVERED')">Complete
+        </button>
+        <button type="button" class="btn btn-danger"
+                data-dismiss="modal" (click)="updateStatus('REJECTED')">Reject
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

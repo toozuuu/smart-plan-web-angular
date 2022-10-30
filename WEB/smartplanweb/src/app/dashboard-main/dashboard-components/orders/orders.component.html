@@ -1,0 +1,62 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="card" style="margin: 5vh 2vw;background: #414d69">
+    <div style="font-size: 30px;
+    color: white;
+    font-weight: bold;
+    margin-left: 3vw;
+    margin-top: 3vh;">My Orders ({{orderCount}})
+    </div>
+
+    <div class="card-body">
+      <div *ngIf="orderCount > 0"
+           style="width:100%;height: 100vh ;  overflow-y: auto;margin-top: 5vh">
+        <table class="table">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Order Id</th>
+            <th scope="col">Meal Name</th>
+            <th scope="col">Meal Type</th>
+            <th scope="col">Price ($)</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orderDetailList; let i = index" style="color: white!important;">
+            <td>{{order?.purchaseDetailsId}}</td>
+            <td><img src="{{'http://localhost:8080/file/download/' + order?.mealId.image}}" alt=""
+                     style="height: 70px;border-radius: 10px;">&nbsp;{{order?.mealId.mealName}}</td>
+            <td>{{order?.mealId.mealType}}</td>
+            <td>{{order?.price| number:'2.2-2'}}</td>
+            <td>{{order?.quantity}}</td>
+            <td>{{order?.orderDate}}</td>
+            <td>{{order?.status}}</td>
+            <td>
+              <button [disabled]="order.status !== 'PENDING'" (click)="changeStatus(order.id)" class="btn btn-danger" type="button">
+                <em class="fa fa-pencil"></em></button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div *ngIf="orderCount === 0" class="emptyClass">
+        <img src="assets/img/public/emptyCart.png" alt="" style="width: 300px;border-radius: 10px;">
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<app-chat-config></app-chat-config>
+<app-chat-widget></app-chat-widget>
+
+<app-footer></app-footer>

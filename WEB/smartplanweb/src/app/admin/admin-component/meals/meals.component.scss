@@ -1,0 +1,41 @@
+.img {
+    width: 100px;
+    height: 70px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.form-control:focus,
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.inputError{
+  font-size: 10px;
+  color: red;
+}
+
+
+.button.primary-btn{
+  background-color: #4CAF50!important;
+}
+
+.mealBtn{
+  width: 125px;
+  float: right;
+  height: 55px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.addIngredientBtn{
+  width: 125px;
+  float: left;
+  height: 55px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.th-color{
+  color: gray!important;
+}
